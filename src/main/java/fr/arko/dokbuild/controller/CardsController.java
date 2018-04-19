@@ -33,7 +33,8 @@ public class CardsController extends AbstractDokkanController {
 	}
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
-	public Page<Cards> find(@RequestParam List<Rarity> rarities, @RequestParam List<Element> elements) {
+	public Page<Cards> find(@RequestParam(required = false, defaultValue = "") List<Rarity> rarities, 
+			@RequestParam(required = false, defaultValue = "") List<Element> elements) {
 		return service.find(rarities, elements, null);
 	}
 	

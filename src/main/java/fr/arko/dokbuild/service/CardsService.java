@@ -1,6 +1,7 @@
 package fr.arko.dokbuild.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,13 @@ public class CardsService {
 	
 	public Page<Cards> find(List<Rarity> rarities, List<Element> elements, Boolean classe) {
 		PageRequest pageRequest = new PageRequest(0, 20, Direction.DESC, "name");
-		return dao.findAll(pageRequest);
+		
+		Page<Cards> findByRarityIn = dao.findByRarityInAndElementIn(
+				rarities.stream().map(x -> x.value()).collect(Collectors.toList()), 
+				elements.stream().map(x -> x.value()).collect(Collectors.toList()), 
+				pageRequest);
+		
+		return findByRarityIn;
 	}
 
 }

@@ -12,4 +12,8 @@ public enum Rarity {
 	public String toString() {
 		return String.valueOf(rarity);
 	}
+
+	public int value() {
+		return rarity;
+	}
 }

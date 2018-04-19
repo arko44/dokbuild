@@ -14,4 +14,8 @@ public enum Element {
 	public String toString() {
 		return String.valueOf(element);
 	}
+
+	public int value() {
+		return element;
+	}
 }
