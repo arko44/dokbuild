@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en" data-ng-app="dokkanModule">
+<head>
+	<title>Dokkan</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.css">
+	<link rel="stylesheet" href="css/dokkan/style.css">
+	
+	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/lodash.js"></script>
+	<script type="text/javascript" src="js/arko/common.js"></script>
+	
+	<script type="text/javascript" src="js/jquery.dataTables-1.10.9.min.js"></script>
+	<script type="text/javascript" src="js/jquery.dataTables.columnFilter-1.5.6.js"></script>
+	<script type="text/javascript" src="js/angular-resource.js"></script>
+	<script type="text/javascript" src="js/angular-datatables.min.js"></script>
+	<script type="text/javascript" src="js/angular-datatables.columnfilter.min.js"></script>
+
+	<script type="text/javascript" src="js/dokkan/dokkan-controller.js"></script>
+	<script type="text/javascript" src="js/dokkan/dokkan-service.js"></script>
+	<script type="text/javascript" src="js/arko/http-service.js"></script>
+</head>
+
+<body role="document" >
+	<nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Dokkan view</a></li>
+					<li><a href="world.html">World map</a></li>
+					<li><a href="command.html">Commandes</a></li>
+					<li><a href="test.html">test</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container" role="main">
+		<div data-ng-controller="dokkanController" class="row">
+			<div class="col-xs-12 col-md-6">
+				<div class="bg-silver text-center" style="align:center" >
+					<span class="text-center">Search cards</span>
+					<br/>
+					<input  size="36" placeholder="card or character name" type="text" name="" />
+					<br/>
+					<img data-ng-click="toggleRarity($event, 'n')" class="rarity" src="images/dokkan/n.png" alt="n" />
+					<img data-ng-click="toggleRarity($event, 'r')" class="rarity" src="images/dokkan/r.png" alt="r" />
+					<img data-ng-click="toggleRarity($event, 'sr')" class="rarity" src="images/dokkan/sr.png" alt="sr" />
+					<img data-ng-click="toggleRarity($event, 'ssr')" class="rarity" src="images/dokkan/ssr.png" alt="ssr" />
+					<img data-ng-click="toggleRarity($event, 'ur')" class="rarity" src="images/dokkan/ur.png" alt="ur" />
+					<img data-ng-click="toggleRarity($event, 'lr')" class="rarity" src="images/dokkan/lr.png" alt="lr" />
+					<br/>
+					<img data-ng-click="toggleElement($event, 'agl')" class="element" src="images/dokkan/agl.png" alt="agl" />
+					<img data-ng-click="toggleElement($event, 'teq')" class="element" src="images/dokkan/teq.png" alt="teq" />
+					<img data-ng-click="toggleElement($event, 'int')" class="element" src="images/dokkan/int.png" alt="int" />
+					<img data-ng-click="toggleElement($event, 'phy')" class="element" src="images/dokkan/phy.png" alt="phy" />
+					<img data-ng-click="toggleElement($event, 'str')" class="element" src="images/dokkan/str.png" alt="str" />
+					<br/>
+					<img class="classe" src="images/dokkan/super.png" alt="super" />
+					<img class="classe" src="images/dokkan/extreme.png" alt="extreme" />
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<div class="bg-silver text-center" style="align:left" >
+					<span data-ng-repeat="card in cards">
+						{{card.name}} <img class="thumb" src="http://images.dokkan.info/images/card_thumbs_full/small/card_{{card.id}}_thumb_full.png" />
+						<br/>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
