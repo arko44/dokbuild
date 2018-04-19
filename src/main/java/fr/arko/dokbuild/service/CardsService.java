@@ -18,14 +18,14 @@ import fr.arko.dokbuild.enumeration.Rarity;
 @Transactional(readOnly = true)
 @Service
 public class CardsService {
-
+	
 	@Autowired
 	private CardsDao dao;
 
 	@Autowired
 	private PassiveSkillsDao passiveSkillsDao;
 	
-	public Page<Cards> find(Rarity rarity, Element element, Boolean classe) {
+	public Page<Cards> find(List<Rarity> rarities, List<Element> elements, Boolean classe) {
 		PageRequest pageRequest = new PageRequest(0, 20, Direction.DESC, "name");
 		return dao.findAll(pageRequest);
 	}

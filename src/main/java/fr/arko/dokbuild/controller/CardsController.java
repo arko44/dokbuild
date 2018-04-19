@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arko.dokbuild.dao.CardsDao;
@@ -32,8 +33,8 @@ public class CardsController extends AbstractDokkanController {
 	}
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
-	public Page<Cards> find() {
-		return service.find(Rarity.SSR, Element.AGI, null);
+	public Page<Cards> find(@RequestParam List<Rarity> rarities, @RequestParam List<Element> elements) {
+		return service.find(rarities, elements, null);
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)

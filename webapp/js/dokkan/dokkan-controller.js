@@ -4,13 +4,8 @@ app.run(function ($rootScope) { $rootScope._ = _; });
 
 app.controller('dokkanController', function( $scope, $interval, httpService, dokkanService ) {
 	
-	var UPDATE_WORLD_MS_INTERVAL = 15 * 1000
-	var MAX_DISTANCE_WITHOUT_REFRESH_WORLD = 10
-	var lastCenter = {'x':0, 'y':0}
-	var lastMoveMap = {}
-	
-	$scope.raritySelected = {'n':false, 'r':false, 'sr':false, 'ssr':false, 'ur':false, 'lr':false}
-	$scope.elementSelected = {'agl':false, 'teq':false, 'int':false, 'phy':false, 'str':false}
+	$scope.raritySelected = {'N':false, 'R':false, 'SR':false, 'SSR':false, 'UR':false, 'LR':false}
+	$scope.elementSelected = {'AGL':false, 'TEQ':false, 'INT':false, 'PHY':false, 'STR':false}
 	
 	$scope.toggleRarity = function($event, rarity) {
 		$scope.raritySelected[rarity] = $scope.raritySelected[rarity] == false
@@ -37,10 +32,28 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	$scope.changeInputValue = function() {
 		
 	}
-
+	
 	//add empty spot to city and display it
 	function searchCards() {
-		httpService.getData("/cards/find/", {}).then(function(page) {
+		var params = {}
+		
+		var resultRarity = []
+		Object.keys($scope.raritySelected).forEach(function(key, index) {
+			if ($scope.raritySelected[key]) {
+				resultRarity.push(key)
+			}
+		})
+		params['rarities'] = resultRarity
+		
+		var resultElement = []
+		Object.keys($scope.elementSelected).forEach(function(key, index) {
+			if ($scope.elementSelected[key]) {
+				resultElement.push(key)
+			}
+		})
+		params['elements'] = resultElement
+		
+		httpService.getData("/cards/find/", params).then(function(page) {
 			$scope.cards = page.content
 		})
 	}

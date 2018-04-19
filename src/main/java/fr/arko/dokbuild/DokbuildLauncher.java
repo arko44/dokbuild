@@ -27,8 +27,6 @@ public class DokbuildLauncher {
 
 		CardsDao cardsDao = ctx.getBean(CardsDao.class);
 		Cards findOne = cardsDao.findOne(1009831l);
-		LOGGER.info(findOne.getName());
-		LOGGER.info(String.valueOf(findOne.getCreatedAt()));
-		
+		LOGGER.info("Database connected !");
 	}
 }
