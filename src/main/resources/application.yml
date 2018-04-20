@@ -12,6 +12,7 @@ spring:
  jpa:
   hibernate:
    ddl-auto: none
+   show_sql: true
   properties:
    hibernate:
     dialect: org.hibernate.dialect.SQLiteDialect

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.arko.dokbuild.dao.CardsDao;
 import fr.arko.dokbuild.domain.Cards;
+import fr.arko.dokbuild.enumeration.Classe;
 import fr.arko.dokbuild.enumeration.Element;
 import fr.arko.dokbuild.enumeration.Rarity;
 import fr.arko.dokbuild.service.CardsService;
@@ -33,9 +34,11 @@ public class CardsController extends AbstractDokkanController {
 	}
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
-	public Page<Cards> find(@RequestParam(required = false, defaultValue = "") List<Rarity> rarities, 
-			@RequestParam(required = false, defaultValue = "") List<Element> elements) {
-		return service.find(rarities, elements, null);
+	public Page<Cards> find(@RequestParam String name,
+			@RequestParam(required = false, defaultValue = "") List<Rarity> rarities, 
+			@RequestParam(required = false, defaultValue = "") List<Element> elements, 
+			@RequestParam(required = false, defaultValue = "") List<Classe> classes) {
+		return service.find(name, rarities, elements, classes);
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)

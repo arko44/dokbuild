@@ -6,6 +6,8 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	
 	$scope.raritySelected = {'N':false, 'R':false, 'SR':false, 'SSR':false, 'UR':false, 'LR':false}
 	$scope.elementSelected = {'AGL':false, 'TEQ':false, 'INT':false, 'PHY':false, 'STR':false}
+	$scope.classeSelected = {'SUPER':false, 'EXTREME':false}
+	$scope.nameInput = ""
 	
 	$scope.toggleRarity = function($event, rarity) {
 		$scope.raritySelected[rarity] = $scope.raritySelected[rarity] == false
@@ -29,8 +31,21 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 		searchCards()
 	}
 	
-	$scope.changeInputValue = function() {
+	$scope.toggleClasse = function($event, classe) {
+		$scope.classeSelected[classe] = $scope.classeSelected[classe] == false
 		
+		if ($scope.classeSelected[classe]) {
+			$event.currentTarget.className = "classe calque"
+		} else {
+			$event.currentTarget.className = "classe"
+		}
+		searchCards()
+	}
+	
+	$scope.changeInputValue = function($event) {
+		$scope.nameInput = $event.currentTarget.value
+		
+		searchCards()
 	}
 	
 	//add empty spot to city and display it
@@ -52,6 +67,16 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 			}
 		})
 		params['elements'] = resultElement
+		
+		var resultClasses = []
+		Object.keys($scope.classeSelected).forEach(function(key, index) {
+			if ($scope.classeSelected[key]) {
+				resultClasses.push(key)
+			}
+		})
+		params['classes'] = resultClasses
+		
+		params['name'] = $scope.nameInput
 		
 		httpService.getData("/cards/find/", params).then(function(page) {
 			$scope.cards = page.content

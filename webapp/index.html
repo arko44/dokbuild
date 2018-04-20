@@ -48,7 +48,7 @@
 				<div class="bg-silver text-center" style="align:center" >
 					<span class="text-center">Search cards</span>
 					<br/>
-					<input  size="36" placeholder="card or character name" type="text" name="" />
+					<input data-ng-blur="changeInputValue($event)" size="36" placeholder="card or character name" type="text" />
 					<br/>
 					<img data-ng-click="toggleRarity($event, 'N')" class="rarity" src="images/dokkan/n.png" alt="n" />
 					<img data-ng-click="toggleRarity($event, 'R')" class="rarity" src="images/dokkan/r.png" alt="r" />
@@ -63,8 +63,8 @@
 					<img data-ng-click="toggleElement($event, 'PHY')" class="element" src="images/dokkan/phy.png" alt="phy" />
 					<img data-ng-click="toggleElement($event, 'STR')" class="element" src="images/dokkan/str.png" alt="str" />
 					<br/>
-					<img class="classe" src="images/dokkan/super.png" alt="super" />
-					<img class="classe" src="images/dokkan/extreme.png" alt="extreme" />
+					<img data-ng-click="toggleClasse($event, 'SUPER')" class="classe" src="images/dokkan/super.png" alt="super" />
+					<img data-ng-click="toggleClasse($event, 'EXTREME')" class="classe" src="images/dokkan/extreme.png" alt="extreme" />
 				</div>
 			</div>
 			<div class="col-xs-12 col-md-6">
