@@ -44,7 +44,7 @@
 	
 	<div class="container" role="main">
 		<div data-ng-controller="dokkanController" class="row">
-			<div class="col-xs-12 col-md-6">
+			<div class="col-xs-12 col-md-5">
 				<div class="bg-silver text-center" style="align:center" >
 					<span class="text-center">Search cards</span>
 					<br/>
@@ -67,12 +67,13 @@
 					<img data-ng-click="toggleClasse($event, 'EXTREME')" class="classe" src="images/dokkan/extreme.png" alt="extreme" />
 				</div>
 			</div>
-			<div class="col-xs-12 col-md-6">
+			<div class="col-xs-12 col-md-7">
 				<div class="bg-silver text-center" style="align:left" >
-					<span data-ng-repeat="card in cards">
-						{{card.name}} <img class="thumb" src="http://images.dokkan.info/images/card_thumbs_full/small/card_{{card.id}}_thumb_full.png" />
-						<br/>
-					</span>
+					<p data-ng-repeat="cardsGroup in cardsGroups">
+						<span class="thumb96" data-ng-repeat="card in cardsGroup">
+							<img class="thumb96" src="http://images.dokkan.info/images/card_thumbs_full/small/card_{{card.id}}_thumb_full.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
+						</span>
+					</p>
 				</div>
 			</div>
 		</div>

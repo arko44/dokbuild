@@ -13,6 +13,11 @@ img.thumb {
 	width: 48px;
 }
 
+img.thumb96 {
+	height: 96px;
+	width: 96px;
+}
+
 img.calque {
 	background-color: rgba(255, 255, 255, 0.5);
 }

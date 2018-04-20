@@ -79,7 +79,11 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 		params['name'] = $scope.nameInput
 		
 		httpService.getData("/cards/find/", params).then(function(page) {
-			$scope.cards = page.content
+			var length = page.content
+			$scope.cardsGroups = []
+			for (var i=0; i<Math.ceil(page.size/5); i++) {
+				$scope.cardsGroups.push(page.content.slice(i*5, 5 * (1+i)))
+			}
 		})
 	}
 

@@ -16,6 +16,7 @@ import fr.arko.dokbuild.domain.Cards;
 import fr.arko.dokbuild.enumeration.Classe;
 import fr.arko.dokbuild.enumeration.Element;
 import fr.arko.dokbuild.enumeration.Rarity;
+import fr.arko.dokbuild.service.CardsService;
 import fr.arko.dokbuild.service.FactoryService;
 
 @SpringBootApplication
@@ -33,12 +34,13 @@ public class DokbuildLauncher {
 
 		LOGGER.info("SupervisionChart Start successfull, wait for http layer ...");
 
+		CardsService cardsService = ctx.getBean(CardsService.class);
 		CardsDao cardsDao = ctx.getBean(CardsDao.class);
 		Cards findOne = cardsDao.findOne(1009831l);
 		
-		PageRequest pageRequest = new PageRequest(0, 20, Direction.DESC, "cost");
-		Page<Cards> searchCard = cardsDao.searchCard("vege", Arrays.asList(Rarity.SSR.value()), Arrays.asList(Element.AGL.value() * Classe.SUPER.value()), pageRequest);
-		LOGGER.info("nb cards : " + searchCard.getContent().size());
+		Page<Cards> find = cardsService.find("vege", Arrays.asList(Rarity.SSR), Arrays.asList(Element.AGL), Arrays.asList(Classe.SUPER));
+		
+		LOGGER.info("nb cards : " + find.getContent().size());
 		
 		LOGGER.info("Database connected !");
 	}
