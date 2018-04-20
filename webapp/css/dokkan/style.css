@@ -9,13 +9,18 @@ img.element {
 }
 
 img.thumb {
-	height: 48px;
-	width: 48px;
+	height: 62px;
+	width: 75px;
 }
 
-img.thumb96 {
-	height: 96px;
-	width: 96px;
+img.thumbHalf {
+	height: 94px;
+	width: 113px;
+}
+
+img.thumbFull {
+	height: 125px;
+	width: 150px;
 }
 
 img.calque {
