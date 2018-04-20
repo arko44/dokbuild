@@ -1,8 +1,11 @@
 package fr.arko.dokbuild.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,34 +20,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Cards extends AbstractEntity {
 	
-	@Column
 	private String name;
 
-	@Column
 	private Integer characterId;
-	@Column
 	private Integer awakedCardId;
-	@Column
 	private Integer cost;
-	@Column
 	private Integer rarity;
-	@Column
 	private Integer hpMax;
-	@Column
 	private Integer atkMax;
-	@Column
 	private Integer defMax;
-	@Column
 	private Integer element;
-	@Column
 	private Integer lvMax;
-	
-	@Column
 	private Integer specialId;
-	@Column
 	private Integer passiveSkillSetId;
-	@Column
+	
+	@Transient
+	private PassiveSkills passiveSkill;
+	
 	private Integer leaderSkillId;
+	
+	@Transient
+	private LeaderSkills leaderSkill;
+	
+	@Transient
+	private List<LinkSkills> linkSkills;;
 	
 	@Column(name="link_skill1_id")
 	private Integer linkSkill1Id;

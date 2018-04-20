@@ -42,7 +42,8 @@ public class CardsController extends AbstractDokkanController {
 	}
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public Cards get(@RequestParam long id) {
+	public Cards get(@RequestParam Integer id) {
+		service.findOne(id);
 		return dao.findOne(id);
 	}
 }

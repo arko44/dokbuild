@@ -1,6 +1,5 @@
 package fr.arko.dokbuild.service;
 
-import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -25,8 +24,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.arko.dokbuild.dao.CardsDao;
+import fr.arko.dokbuild.dao.LeaderSkillsDao;
+import fr.arko.dokbuild.dao.LinkSkillsDao;
 import fr.arko.dokbuild.dao.PassiveSkillsDao;
 import fr.arko.dokbuild.domain.Cards;
+import fr.arko.dokbuild.domain.LeaderSkills;
+import fr.arko.dokbuild.domain.LinkSkills;
+import fr.arko.dokbuild.domain.PassiveSkills;
 import fr.arko.dokbuild.enumeration.Classe;
 import fr.arko.dokbuild.enumeration.Element;
 import fr.arko.dokbuild.enumeration.Rarity;
@@ -41,7 +45,13 @@ public class CardsService {
 	private CardsDao dao;
 
 	@Autowired
+	private LeaderSkillsDao leaderSkillsDao;
+	
+	@Autowired
 	private PassiveSkillsDao passiveSkillsDao;
+
+	@Autowired
+	private LinkSkillsDao linkSkillsDao;
 
 	public Page<Cards> find(String name, List<Rarity> rarities, List<Element> elements, List<Classe> classes) {
 		PageRequest pageRequest = new PageRequest(0, 20, new Sort(new Order(Direction.DESC, "cost"), new Order(Direction.DESC, "element"), new Order(Direction.DESC, "id")));
@@ -103,5 +113,27 @@ public class CardsService {
 				rbc.close();
 			}
 		}
+	}
+
+	public Cards findOne(int id) {
+		Cards card = dao.findOne(id);
+		
+		if (card.getLeaderSkillId() != null) {
+			LeaderSkills leader = leaderSkillsDao.findOne(card.getLeaderSkillId());
+			card.setLeaderSkill(leader);
+		}
+		
+		if (card.getPassiveSkillSetId() != null) {
+			PassiveSkills passive = passiveSkillsDao.findOne(card.getPassiveSkillSetId());
+			card.setPassiveSkill(passive);
+		}
+		
+		List<Integer> collect = Arrays.asList(card.getLinkSkill1Id(), card.getLinkSkill2Id(), card.getLinkSkill3Id(), 
+				card.getLinkSkill4Id(), card.getLinkSkill5Id(), card.getLinkSkill6Id(), card.getLinkSkill7Id())
+				.stream().filter(x->x!=null).collect(Collectors.toList());
+		List<LinkSkills> listSkills = linkSkillsDao.findByIdIn(collect);
+		card.setLinkSkills(listSkills);
+		
+		return card;
 	}
 }

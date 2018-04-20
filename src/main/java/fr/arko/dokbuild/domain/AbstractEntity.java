@@ -15,17 +15,15 @@ import lombok.Data;
 public abstract class AbstractEntity {
 
 	@Id
-	private Long id;
+	private Integer id;
 
-	@Column
 	@Convert(converter = LocalDateTimeConverter2.class)
 	private LocalDateTime createdAt = null;
 
-	@Column
-	@Convert(converter = LocalDateTimeConverter2.class)
-	private LocalDateTime openAt = null;
+//	@Column
+//	@Convert(converter = LocalDateTimeConverter2.class)
+//	private LocalDateTime openAt = null;
 
-	@Column
 	@Convert(converter = LocalDateTimeConverter2.class)
 	private LocalDateTime updatedAt = null;
 }

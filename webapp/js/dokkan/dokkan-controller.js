@@ -10,15 +10,12 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	$scope.classeSelected = {'SUPER':false, 'EXTREME':false}
 	$scope.nameInput = ""
 		
-	//display card details
-	$scope.cardSelected = 
-		
 	$scope.displayCard = function(cardId) {
-		
-		httpService.getData("/cards/get/", {'id': cardId}).then(function(card) {
-			$scope.cardSelected = card
-		})
-		
+		if (cardId != undefined && cardId > 0) {
+			httpService.getData("/cards/get/", {'id': cardId}).then(function(card) {
+				$scope.cardSelected = card
+			})
+		}
 	}
 	
 	$scope.toggleRarity = function($event, rarity) {

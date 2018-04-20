@@ -68,20 +68,18 @@
 				</div>
 				<br/>
 				<div data-ng-if="cardSelected" class="bg-silver text-center" style="align:center" >
-					{{cardSelected.name}}
+					<h3>{{cardSelected.name}}</h3>
 					<table>
-						<tr><td>Lead : {{cardSelected.leaderSkillId}}</td></tr>
-						<tr><td>Passive : {{cardSelected.passiveSkillSetId}}</td></tr>
-						<tr><td>Super Attack : {{cardSelected.specialId}}</td></tr>
+						<tr><td><b>Lead :</b> {{cardSelected.leaderSkill.description}}</td></tr>
+						<tr><td><b>Passive :</b> {{cardSelected.passiveSkill.description}}</td></tr>
+						<tr><td><b>Super Attack :</b> {{cardSelected.specialId}}</td></tr>
 						<tr>
 							<td>
-								Links : {{cardSelected.linkSkill1Id}}, {{cardSelected.linkSkill2Id}}, {{cardSelected.linkSkill3Id}}, 
-								{{cardSelected.linkSkill4Id}}, {{cardSelected.linkSkill5Id}}, {{cardSelected.linkSkill6Id}}, {{cardSelected.linkSkill7Id}}
+								<b>Links :</b> <span data-ng-repeat="link in cardSelected.linkSkills" title="{{link.description}}">{{link.name}}, </span>
 							</td>
 						</tr>
-						<tr><td></td>Categories : {{cardSelected.cardCategory1Id}}, {{cardSelected.cardCategory2Id}}</tr>
-						<tr><td></td>Categories : {{cardSelected.cardCategory1Id}}, {{cardSelected.cardCategory2Id}}</tr>
-						<tr><td>Stats : HP : {{cardSelected.hpMax}}, ATK : {{cardSelected.atkMax}}, DEF : {{cardSelected.defMax}}</td></tr>
+						<tr><td><b>Categories :</b> {{cardSelected.cardCategory1Id}}, {{cardSelected.cardCategory2Id}}</td></tr>
+						<tr><td><b>Stats :</b> HP : {{cardSelected.hpMax}}, ATK : {{cardSelected.atkMax}}, DEF : {{cardSelected.defMax}}</td></tr>
 					</table>
 				</div>
 			</div>
