@@ -66,12 +66,30 @@
 					<img data-ng-click="toggleClasse($event, 'SUPER')" class="classe" src="images/dokkan/super.png" alt="super" />
 					<img data-ng-click="toggleClasse($event, 'EXTREME')" class="classe" src="images/dokkan/extreme.png" alt="extreme" />
 				</div>
+				<br/>
+				<div data-ng-if="cardSelected" class="bg-silver text-center" style="align:center" >
+					{{cardSelected.name}}
+					<table>
+						<tr><td>Lead : {{cardSelected.leaderSkillId}}</td></tr>
+						<tr><td>Passive : {{cardSelected.passiveSkillSetId}}</td></tr>
+						<tr><td>Super Attack : {{cardSelected.specialId}}</td></tr>
+						<tr>
+							<td>
+								Links : {{cardSelected.linkSkill1Id}}, {{cardSelected.linkSkill2Id}}, {{cardSelected.linkSkill3Id}}, 
+								{{cardSelected.linkSkill4Id}}, {{cardSelected.linkSkill5Id}}, {{cardSelected.linkSkill6Id}}, {{cardSelected.linkSkill7Id}}
+							</td>
+						</tr>
+						<tr><td></td>Categories : {{cardSelected.cardCategory1Id}}, {{cardSelected.cardCategory2Id}}</tr>
+						<tr><td></td>Categories : {{cardSelected.cardCategory1Id}}, {{cardSelected.cardCategory2Id}}</tr>
+						<tr><td>Stats : HP : {{cardSelected.hpMax}}, ATK : {{cardSelected.atkMax}}, DEF : {{cardSelected.defMax}}</td></tr>
+					</table>
+				</div>
 			</div>
 			<div class="col-xs-12 col-md-7">
 				<div class="bg-silver text-center" style="align:left" >
 					<p data-ng-repeat="cardsGroup in cardsGroups">
 						<span class="thumbHalf" data-ng-repeat="card in cardsGroup">
-							<img class="thumbHalf" src="images/thumbs/{{card.id}}_thumb.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
+							<img data-ng-click="displayCard(card.id)" class="thumbHalf" src="images/thumbs/{{card.id}}_thumb.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
 						</span>
 					</p>
 				</div>

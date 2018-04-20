@@ -4,10 +4,22 @@ app.run(function ($rootScope) { $rootScope._ = _; });
 
 app.controller('dokkanController', function( $scope, $interval, httpService, dokkanService ) {
 	
+	//search cards
 	$scope.raritySelected = {'N':false, 'R':false, 'SR':false, 'SSR':false, 'UR':false, 'LR':false}
 	$scope.elementSelected = {'AGL':false, 'TEQ':false, 'INT':false, 'PHY':false, 'STR':false}
 	$scope.classeSelected = {'SUPER':false, 'EXTREME':false}
 	$scope.nameInput = ""
+		
+	//display card details
+	$scope.cardSelected = 
+		
+	$scope.displayCard = function(cardId) {
+		
+		httpService.getData("/cards/get/", {'id': cardId}).then(function(card) {
+			$scope.cardSelected = card
+		})
+		
+	}
 	
 	$scope.toggleRarity = function($event, rarity) {
 		$scope.raritySelected[rarity] = $scope.raritySelected[rarity] == false

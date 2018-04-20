@@ -18,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +44,7 @@ public class CardsService {
 	private PassiveSkillsDao passiveSkillsDao;
 
 	public Page<Cards> find(String name, List<Rarity> rarities, List<Element> elements, List<Classe> classes) {
-		PageRequest pageRequest = new PageRequest(0, 20, Direction.DESC, "cost");
+		PageRequest pageRequest = new PageRequest(0, 20, new Sort(new Order(Direction.DESC, "cost"), new Order(Direction.DESC, "element"), new Order(Direction.DESC, "id")));
 
 		List<Integer> intRarities = (rarities.isEmpty() ? Arrays.asList(Rarity.values()) : rarities).stream()
 				.map(x -> x.value()).collect(Collectors.toList());
