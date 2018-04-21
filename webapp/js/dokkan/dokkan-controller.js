@@ -5,11 +5,24 @@ app.run(function ($rootScope) { $rootScope._ = _; });
 app.controller('dokkanController', function( $scope, $interval, httpService, dokkanService ) {
 	
 	//search cards
+	$scope.cardsGroups = []
 	$scope.raritySelected = {'N':false, 'R':false, 'SR':false, 'SSR':false, 'UR':false, 'LR':false}
 	$scope.elementSelected = {'AGL':false, 'TEQ':false, 'INT':false, 'PHY':false, 'STR':false}
 	$scope.classeSelected = {'SUPER':false, 'EXTREME':false}
 	$scope.nameInput = ""
-		
+	
+	var offset = 20
+	
+	$scope.decreaseOffset = function(nb) {
+		offset = Math.max(20, offset - nb)
+		searchCards()
+	}
+	
+	$scope.increaseOffset = function(nb) {
+		offset = Math.min(100, offset + nb)
+		searchCards()
+	}
+	
 	$scope.displayCard = function(cardId) {
 		if (cardId != undefined && cardId > 0) {
 			httpService.getData("/cards/get/", {'id': cardId}).then(function(card) {
@@ -99,9 +112,13 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 
 		params['link'] = $scope.link
 		
+		params['column'] = 'cost'
+		params['direction'] = 'DESC'
+		params['size'] = offset
+		
 		httpService.getData("/cards/find/", params).then(function(page) {
-			var length = page.content
 			$scope.cardsGroups = []
+			var length = page.content
 			for (var i=0; i<Math.ceil(page.size/5); i++) {
 				$scope.cardsGroups.push(page.content.slice(i * 5, 5 * (1 + i)))
 			}

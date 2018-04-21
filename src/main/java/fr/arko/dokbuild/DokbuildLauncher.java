@@ -8,6 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 
 import fr.arko.dokbuild.dao.CardsDao;
 import fr.arko.dokbuild.domain.Cards;
@@ -34,7 +38,8 @@ public class DokbuildLauncher {
 		ctx.getBean(CardsDao.class);
 		cardsService.findOne(1009831);
 		
-		Page<Cards> find = cardsService.find("vege", -1, -1, Arrays.asList(Rarity.SSR), Arrays.asList(Element.AGL), Arrays.asList(Classe.SUPER));
+		PageRequest pageRequest = new PageRequest(0, 20, new Sort(new Order(Direction.ASC, "cost")));
+		Page<Cards> find = cardsService.find("vege", -1, -1, Arrays.asList(Rarity.SSR), Arrays.asList(Element.AGL), Arrays.asList(Classe.SUPER), pageRequest);
 		
 		LOGGER.info("nb cards : " + find.getContent().size());
 		

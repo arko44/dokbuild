@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,9 +48,7 @@ public class CardsService {
 	@Autowired
 	private CardCategoriesDao cardCategoriesDao;
 
-	public Page<Cards> find(String name, Integer category, Integer link, List<Rarity> rarities, List<Element> elements, List<Classe> classes) {
-		PageRequest pageRequest = new PageRequest(0, 20, new Sort(new Order(Direction.DESC, "cost"), new Order(Direction.DESC, "element"), new Order(Direction.DESC, "id")));
-
+	public Page<Cards> find(String name, Integer category, Integer link, List<Rarity> rarities, List<Element> elements, List<Classe> classes, PageRequest pageRequest) {
 		List<Integer> intRarities = (rarities.isEmpty() ? Arrays.asList(Rarity.values()) : rarities).stream()
 				.map(x -> x.value()).collect(Collectors.toList());
 		List<Integer> intElements = (elements.isEmpty() ? Arrays.asList(Element.values()) : elements).stream()

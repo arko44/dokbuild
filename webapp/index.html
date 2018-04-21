@@ -94,6 +94,16 @@
 							<img data-ng-click="displayCard(card.id)" class="thumbHalf" src="images/thumbs/{{card.id}}_thumb.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
 						</span>
 					</p>
+					<div data-ng-if="cardsGroups.length > 0">
+						<span class="pull-right">
+							<button class="btn btn-xs btn-primary" data-ng-click="decreaseOffset(20)">
+								<i class="glyphicon glyphicon-minus"></i>
+							</button>
+							<button class="btn btn-xs btn-primary" data-ng-click="increaseOffset(20)">
+								<i class="glyphicon glyphicon-plus"></i>
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
