@@ -31,10 +31,10 @@ public class DokbuildLauncher {
 		LOGGER.info("SupervisionChart Start successfull, wait for http layer ...");
 
 		CardsService cardsService = ctx.getBean(CardsService.class);
-		CardsDao cardsDao = ctx.getBean(CardsDao.class);
-		Cards findOne = cardsService.findOne(1009831);
+		ctx.getBean(CardsDao.class);
+		cardsService.findOne(1009831);
 		
-		Page<Cards> find = cardsService.find("vege", Arrays.asList(Rarity.SSR), Arrays.asList(Element.AGL), Arrays.asList(Classe.SUPER));
+		Page<Cards> find = cardsService.find("vege", -1, -1, Arrays.asList(Rarity.SSR), Arrays.asList(Element.AGL), Arrays.asList(Classe.SUPER));
 		
 		LOGGER.info("nb cards : " + find.getContent().size());
 		

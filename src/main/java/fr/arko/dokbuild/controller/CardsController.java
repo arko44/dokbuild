@@ -34,11 +34,13 @@ public class CardsController extends AbstractDokkanController {
 	}
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
-	public Page<Cards> find(@RequestParam String name,
+	public Page<Cards> find(@RequestParam String name, 
+			@RequestParam(required = false, defaultValue = "-1") Integer category,
+			@RequestParam(required = false, defaultValue = "-1") Integer link,
 			@RequestParam(required = false, defaultValue = "") List<Rarity> rarities, 
 			@RequestParam(required = false, defaultValue = "") List<Element> elements, 
 			@RequestParam(required = false, defaultValue = "") List<Classe> classes) {
-		return service.find(name, rarities, elements, classes);
+		return service.find(name, category, link, rarities, elements, classes);
 	}
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)

@@ -51,13 +51,21 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 		searchCards()
 	}
 	
-	$scope.changeInputValue = function($event) {
+	$scope.changeCardName = function($event) {
 		$scope.nameInput = $event.currentTarget.value
-		
 		searchCards()
 	}
 	
-	//add empty spot to city and display it
+	$scope.changeCategory = function($event) {
+		$scope.category = $event.currentTarget.value
+		searchCards()
+	}
+
+	$scope.changeLink = function($event) {
+		$scope.link = $event.currentTarget.value
+		searchCards()
+	}
+	
 	function searchCards() {
 		var params = {}
 		
@@ -86,23 +94,38 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 		params['classes'] = resultClasses
 		
 		params['name'] = $scope.nameInput
+
+		params['category'] = $scope.category
+
+		params['link'] = $scope.link
 		
 		httpService.getData("/cards/find/", params).then(function(page) {
 			var length = page.content
 			$scope.cardsGroups = []
 			for (var i=0; i<Math.ceil(page.size/5); i++) {
-				$scope.cardsGroups.push(page.content.slice(i*5, 5 * (1+i)))
+				$scope.cardsGroups.push(page.content.slice(i * 5, 5 * (1 + i)))
 			}
 		})
 	}
+	
+	function loadCategories() {
+		httpService.getData("/categories/list/").then(function(categories) {
+			$scope.categories = categories
+		})
+	}
 
-	// function call once, init data for app
+	function loadLinks() {
+		httpService.getData("/links/list/").then(function(links) {
+			$scope.links = links
+		})
+	}
+
 	function _init() {
-		
+		loadCategories()
+		loadLinks()
 	}
 	
-	//TODO : fix dev frequency, externalize & integrate with gulp ?
 	angular.element(document).ready(function () {
-		
+		_init()
 	});
 })

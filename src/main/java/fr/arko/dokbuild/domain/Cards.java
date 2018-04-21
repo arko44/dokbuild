@@ -60,10 +60,25 @@ public class Cards extends AbstractEntity {
 	@Column(name="link_skill7_id")
 	private Integer linkSkill7Id;
 	
+	@Transient
+	private List<CardCategories> cardCategories;
+	
 	@Column(name="card_category1_id")
 	private Integer cardCategory1Id;
 
 	@Column(name="card_category2_id")
 	private Integer cardCategory2Id;
+	
+	@Column(name="card_category3_id")
+	private Integer cardCategory3Id;
+	
+	@Column(name="card_category4_id")
+	private Integer cardCategory4Id;
+	
+	@Column(name="card_category5_id")
+	private Integer cardCategory5Id;
+	
+	@Column(name="card_category6_id")
+	private Integer cardCategory6Id;
 	
 }

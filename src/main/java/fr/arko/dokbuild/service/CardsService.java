@@ -1,12 +1,5 @@
 package fr.arko.dokbuild.service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,10 +16,12 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.arko.dokbuild.dao.CardCategoriesDao;
 import fr.arko.dokbuild.dao.CardsDao;
 import fr.arko.dokbuild.dao.LeaderSkillsDao;
 import fr.arko.dokbuild.dao.LinkSkillsDao;
 import fr.arko.dokbuild.dao.PassiveSkillsDao;
+import fr.arko.dokbuild.domain.CardCategories;
 import fr.arko.dokbuild.domain.Cards;
 import fr.arko.dokbuild.domain.LeaderSkills;
 import fr.arko.dokbuild.domain.LinkSkills;
@@ -52,8 +47,11 @@ public class CardsService {
 
 	@Autowired
 	private LinkSkillsDao linkSkillsDao;
+	
+	@Autowired
+	private CardCategoriesDao cardCategoriesDao;
 
-	public Page<Cards> find(String name, List<Rarity> rarities, List<Element> elements, List<Classe> classes) {
+	public Page<Cards> find(String name, Integer category, Integer link, List<Rarity> rarities, List<Element> elements, List<Classe> classes) {
 		PageRequest pageRequest = new PageRequest(0, 20, new Sort(new Order(Direction.DESC, "cost"), new Order(Direction.DESC, "element"), new Order(Direction.DESC, "id")));
 
 		List<Integer> intRarities = (rarities.isEmpty() ? Arrays.asList(Rarity.values()) : rarities).stream()
@@ -71,50 +69,12 @@ public class CardsService {
 					.addAll(intElements.stream().map(x -> x + Classe.EXTREME.value()).collect(Collectors.toList()));
 		}
 
-		Page<Cards> findByRarityIn = dao.searchCard(name, intRarities, searchIntElements, pageRequest);
+		Page<Cards> result = dao.searchCard(name, category, link, intRarities, searchIntElements, pageRequest);
+		LOGGER.debug("Get {} cards on {}", result.getNumberOfElements(), result.getTotalElements());
 
-		//downloadThumbsIfNotExist(findByRarityIn.getContent());
-		
-		return findByRarityIn;
+		return result;
 	}
 	
-	private static void downloadThumbsIfNotExist(List<Cards> list) {
-		String root = "D:/projets/repository/dokbuild/webapp/images/thumbs/";
-		
-		list.forEach(x -> {
-			try {
-				String newFilePath = root + x.getId() + "_thumb.png";
-				Path path = Paths.get(newFilePath);
-				if (!path.toFile().exists()) {
-					LOGGER.error("File " + x.getId() + " not exist");
-					downloadUsingNIO(
-							"http://images.dokkan.info/images/card_thumbs_full/small/card_" + x.getId() + "_thumb_full.png", 
-							newFilePath);
-				}
-			} catch (Exception e) {
-				
-			}
-		});
-	}
-
-	private static void downloadUsingNIO(String urlStr, String file) throws IOException {
-		URL url = new URL(urlStr);
-		ReadableByteChannel rbc = null;
-		FileOutputStream fos = null;
-		try {
-			rbc = Channels.newChannel(url.openStream());
-			fos = new FileOutputStream(file);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-		} finally {
-			if (fos != null) {
-				fos.close();
-			}
-			if (rbc != null) {
-				rbc.close();
-			}
-		}
-	}
-
 	public Cards findOne(int id) {
 		Cards card = dao.findOne(id);
 		
@@ -128,10 +88,15 @@ public class CardsService {
 			card.setPassiveSkill(passive);
 		}
 		
-		List<Integer> collect = Arrays.asList(card.getLinkSkill1Id(), card.getLinkSkill2Id(), card.getLinkSkill3Id(), 
+		List<Integer> categoriesId = Arrays.asList(card.getCardCategory1Id(), card.getCardCategory2Id())
+				.stream().filter(x->x!=null).collect(Collectors.toList());
+		List<CardCategories> listCategories = cardCategoriesDao.findByIdIn(categoriesId);
+		card.setCardCategories(listCategories);
+		
+		List<Integer> linkSkillsId = Arrays.asList(card.getLinkSkill1Id(), card.getLinkSkill2Id(), card.getLinkSkill3Id(), 
 				card.getLinkSkill4Id(), card.getLinkSkill5Id(), card.getLinkSkill6Id(), card.getLinkSkill7Id())
 				.stream().filter(x->x!=null).collect(Collectors.toList());
-		List<LinkSkills> listSkills = linkSkillsDao.findByIdIn(collect);
+		List<LinkSkills> listSkills = linkSkillsDao.findByIdIn(linkSkillsId);
 		card.setLinkSkills(listSkills);
 		
 		return card;
