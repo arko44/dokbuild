@@ -13,6 +13,15 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	
 	var offset = 20
 	
+	var saibaimanId = 1000780
+	$scope.team = [{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId}]
+	
+	$scope.affectCardToTeam = function(id, position) {
+		httpService.getData("/cards/get/", {'id': id}).then(function(card) {
+			team[position] = card
+		})
+	}
+	
 	$scope.decreaseOffset = function(nb) {
 		offset = Math.max(20, offset - nb)
 		searchCards()
@@ -140,6 +149,10 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	function _init() {
 		loadCategories()
 		loadLinks()
+		
+		for (var i=0; i++; i<7) {
+			$scope.affectCardToTeam(1000780, i)
+		}
 	}
 	
 	angular.element(document).ready(function () {

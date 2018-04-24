@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="css/dokkan/style.css">
 	
 	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/lodash.js"></script>
@@ -26,6 +27,12 @@
 	<script type="text/javascript" src="js/dokkan/dokkan-controller.js"></script>
 	<script type="text/javascript" src="js/dokkan/dokkan-service.js"></script>
 	<script type="text/javascript" src="js/arko/http-service.js"></script>
+	
+	<script>
+		$(function () {
+			$('[data-toggle="popover"]').popover({trigger: 'hover', placement:'bottom', content:function(){return $($(this).attr('data-html')).html()}})
+		})
+	</script>
 </head>
 
 <body role="document" >
@@ -45,20 +52,29 @@
 	<div class="container" data-ng-controller="dokkanController" role="main">
 		<div class="row">
 			<div class="col-xs-12 col-md-12">
+				
 				<table>
 					<tr>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
-						<td>Liens</td>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
-						<td>Liens</td>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
+						<td><img src="images/thumbs/{{team[0].id}}_thumb.png" /></td>
+						<td>
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+						</td>
+						<td><img src="images/thumbs/{{team[1].id}}_thumb.png" /></td>
+						<td>
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+						</td>
+						<td><img src="images/thumbs/{{team[2].id}}_thumb.png" /></td>
 					</tr>
 					<tr>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
-						<td>Liens</td>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
-						<td>Liens</td>
-						<td><img src="images/thumbs/0_thumb.png" /></td>
+						<td><img src="images/thumbs/{{team[3].id}}_thumb.png" /></td>
+						<td>
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+						</td>
+						<td><img src="images/thumbs/{{team[4].id}}_thumb.png" /></td>
+						<td>
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+						</td>
+						<td><img src="images/thumbs/{{team[5].id}}_thumb.png" /></td>
 					</tr>
 				</table>
 			</div>
@@ -92,7 +108,7 @@
 				</div>
 				<br/>
 				<div data-ng-if="cardSelected" class="bg-silver text-center" style="align:center" >
-					<h3>{{cardSelected.name}}</h3>
+					<h3>{{cardSelected.name}} ({{cardSelected.id}})</h3>
 					<table>
 						<tr><td><b>Lead :</b> {{cardSelected.leaderSkill.description}}</td></tr>
 						<tr><td><b>Passive :</b> {{cardSelected.passiveSkill.description}}</td></tr>
