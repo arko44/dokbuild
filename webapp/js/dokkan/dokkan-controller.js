@@ -2,7 +2,7 @@ var app = angular.module( 'dokkanModule', [] )
 
 app.run(function ($rootScope) { $rootScope._ = _; });
 
-app.controller('dokkanController', function( $scope, $interval, httpService, dokkanService ) {
+app.controller('dokkanController', function( $scope, $rootScope, $interval, httpService, dokkanService ) {
 	
 	//search cards
 	$scope.cardsGroups = []
@@ -15,11 +15,28 @@ app.controller('dokkanController', function( $scope, $interval, httpService, dok
 	
 	var saibaimanId = 1000780
 	$scope.team = [{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId}]
+	$scope.commonsLinks = {'01':{'label':'', 'list':[]}, '12':{'label':'', 'list':[]}, '34':{'label':'', 'list':[]}, '45':{'label':'', 'list':[]}}
 	
 	$scope.affectCardToTeam = function(id, position) {
 		httpService.getData("/cards/get/", {'id': id}).then(function(card) {
-			team[position] = card
+			$scope.team[position] = card
+			console.log(card)
+			updateCommonsLinks(position)
 		})
+	}
+	
+	$rootScope.$on('dropEvent', function(evt, cardId, teamPosition) {
+		console.log("drop event : card " + cardId + " on position " + teamPosition)
+		$scope.affectCardToTeam(cardId, teamPosition)
+	});
+	
+	// search for commons links between two card
+	function updateCommonsLinks(position) {
+		if (position in [1, 2, 4, 5]) {
+			//comparaison de $scope.team[position] && $scope.team[position - 1]
+		} else if (position in [0, 1, 3, 4]) {
+			//comparaison de $scope.team[position] && $scope.team[position + 1]
+		}
 	}
 	
 	$scope.decreaseOffset = function(nb) {

@@ -26,6 +26,7 @@
 
 	<script type="text/javascript" src="js/dokkan/dokkan-controller.js"></script>
 	<script type="text/javascript" src="js/dokkan/dokkan-service.js"></script>
+	<script type="text/javascript" src="js/dokkan/dokkan-directive.js"></script>
 	<script type="text/javascript" src="js/arko/http-service.js"></script>
 	
 	<script>
@@ -55,26 +56,26 @@
 				
 				<table>
 					<tr>
-						<td><img src="images/thumbs/{{team[0].id}}_thumb.png" /></td>
+						<td><img drop="0" src="images/thumbs/{{team[0].id}}_thumb.png" /></td>
 						<td>
-							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['01'].label}}" />
 						</td>
-						<td><img src="images/thumbs/{{team[1].id}}_thumb.png" /></td>
+						<td><img drop="1" src="images/thumbs/{{team[1].id}}_thumb.png" /></td>
 						<td>
-							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['12'].label}}" />
 						</td>
-						<td><img src="images/thumbs/{{team[2].id}}_thumb.png" /></td>
+						<td><img drop="2" src="images/thumbs/{{team[2].id}}_thumb.png" /></td>
 					</tr>
 					<tr>
-						<td><img src="images/thumbs/{{team[3].id}}_thumb.png" /></td>
+						<td><img drop="3" src="images/thumbs/{{team[3].id}}_thumb.png" /></td>
 						<td>
-							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['34'].label}}" />
 						</td>
-						<td><img src="images/thumbs/{{team[4].id}}_thumb.png" /></td>
+						<td><img drop="4" src="images/thumbs/{{team[4].id}}_thumb.png" /></td>
 						<td>
-							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="<p>atk +15%<br/>ki +2</p>" />
+							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['45'].label}}" />
 						</td>
-						<td><img src="images/thumbs/{{team[5].id}}_thumb.png" /></td>
+						<td><img drop="5" src="images/thumbs/{{team[5].id}}_thumb.png" /></td>
 					</tr>
 				</table>
 			</div>
@@ -127,7 +128,7 @@
 				<div class="bg-silver text-center" style="align:left" >
 					<p data-ng-repeat="cardsGroup in cardsGroups">
 						<span class="thumbHalf" data-ng-repeat="card in cardsGroup">
-							<img data-ng-click="displayCard(card.id)" class="thumbHalf" src="images/thumbs/{{card.id}}_thumb.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
+							<img drag="{{card.id}}" data-ng-click="displayCard(card.id)" class="thumbHalf" src="images/thumbs/{{card.id}}_thumb.png" alt="N/A" title="{{card.name}}, cost {{card.cost}}"/>
 						</span>
 					</p>
 					<div data-ng-if="cardsGroups.length > 0">
