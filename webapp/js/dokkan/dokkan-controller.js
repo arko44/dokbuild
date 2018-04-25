@@ -24,8 +24,16 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 		})
 	}
 	
-	$rootScope.$on('dropEvent', function(evt, cardId, teamPosition) {
-		$scope.affectCardToTeam(parseInt(cardId), parseInt(teamPosition))
+	//
+	$rootScope.$on('dropEvent', function(evt, dragObject, teamPosition) {
+		var mod = dragObject.mod
+		if (mod.startsWith('switch_')) {
+			//mode switch
+			var originPosition = parseInt(mod.split('_')[1])
+			var targetId = $scope.team[teamPosition].id
+			$scope.affectCardToTeam(targetId, originPosition)
+		}
+		$scope.affectCardToTeam(parseInt(dragObject.data), parseInt(teamPosition))
 	});
 	
 	// search for commons links between two card

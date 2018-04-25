@@ -11,9 +11,10 @@ app.directive("drag", ["$rootScope", function($rootScope) {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 			attrs.$set('draggable', 'true')
-			scope.dragData = attrs["drag"]
 			element.bind('dragstart', function(evt) {
-				$rootScope.draggedElement = scope.dragData
+				scope.dragData = attrs["drag"]
+				scope.dragMod = attrs["dragmod"]
+				$rootScope.draggedElement = {'mod':scope.dragMod, 'data':scope.dragData}
 				dragStart(evt, element)
 			})
 
@@ -52,6 +53,7 @@ app.directive("drop", ['$rootScope', function($rootScope) {
 			element.bind('dragover', dragOver)
 			element.bind('drop', function(evt) {
 				scope.dropData = attrs["drop"];
+				console.log("drop " + scope.dropData)
 				drop(evt, element)
 				$rootScope.$broadcast('dropEvent', $rootScope.draggedElement, scope.dropData)
 			})
