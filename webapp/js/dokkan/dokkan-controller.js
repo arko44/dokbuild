@@ -20,23 +20,39 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 	$scope.affectCardToTeam = function(id, position) {
 		httpService.getData("/cards/get/", {'id': id}).then(function(card) {
 			$scope.team[position] = card
-			console.log(card)
 			updateCommonsLinks(position)
 		})
 	}
 	
 	$rootScope.$on('dropEvent', function(evt, cardId, teamPosition) {
-		console.log("drop event : card " + cardId + " on position " + teamPosition)
-		$scope.affectCardToTeam(cardId, teamPosition)
+		$scope.affectCardToTeam(parseInt(cardId), parseInt(teamPosition))
 	});
 	
 	// search for commons links between two card
 	function updateCommonsLinks(position) {
-		if (position in [1, 2, 4, 5]) {
+		var card = $scope.team[position]
+		if ([1, 2, 4, 5].includes(position)) {
 			//comparaison de $scope.team[position] && $scope.team[position - 1]
-		} else if (position in [0, 1, 3, 4]) {
-			//comparaison de $scope.team[position] && $scope.team[position + 1]
+			var other = $scope.team[position - 1]
+			var commonsLinks = getCommonsLinks(card, other)
+			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', links:commonsLinks}
+			$scope.commonsLinks['' + (position-1) + '' + position] = object
 		}
+		if ([0, 1, 3, 4].includes(position)) {
+			//comparaison de $scope.team[position] && $scope.team[position + 1]
+			var other = $scope.team[position + 1]
+			var commonsLinks = getCommonsLinks(card, other)
+			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', links:commonsLinks}
+			$scope.commonsLinks['' + position + '' + (position+1) ] = object
+		}
+	}
+	
+	function getCommonsLinks(card1, card2) {
+		var result = []
+		if (card1.linkSkills != undefined && card2.linkSkills != undefined) {
+			result = _.intersectionWith(card1.linkSkills, card2.linkSkills, _.isEqual);
+		}
+		return result
 	}
 	
 	$scope.decreaseOffset = function(nb) {
@@ -167,9 +183,12 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 		loadCategories()
 		loadLinks()
 		
-		for (var i=0; i++; i<7) {
-			$scope.affectCardToTeam(1000780, i)
+		for (var i=0; i<7; i++) {
+			$scope.affectCardToTeam(1009830, i)
 		}
+		
+		updateCommonsLinks(1)
+		updateCommonsLinks(4)
 	}
 	
 	angular.element(document).ready(function () {

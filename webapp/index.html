@@ -31,7 +31,7 @@
 	
 	<script>
 		$(function () {
-			$('[data-toggle="popover"]').popover({trigger: 'hover', placement:'bottom', content:function(){return $($(this).attr('data-html')).html()}})
+			$('[data-toggle="popover"]').popover({html:true, trigger: 'hover', placement:'bottom', content:function(){return $($(this).attr('data-html')).html()}})
 		})
 	</script>
 </head>
@@ -58,7 +58,7 @@
 					<tr>
 						<td><img drop="0" src="images/thumbs/{{team[0].id}}_thumb.png" /></td>
 						<td>
-							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['01'].label}}" />
+							<img id="theId" class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['01'].label}}" />
 						</td>
 						<td><img drop="1" src="images/thumbs/{{team[1].id}}_thumb.png" /></td>
 						<td>
