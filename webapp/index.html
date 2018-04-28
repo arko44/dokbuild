@@ -128,7 +128,9 @@
 					<table>
 						<tr><td><b>Lead :</b> {{cardSelected.leaderSkill.description}}</td></tr>
 						<tr><td><b>Passive :</b> {{cardSelected.passiveSkill.description}}</td></tr>
-						<tr><td><b>Super Attack :</b> {{cardSelected.specialId}}</td></tr>
+						<tr><td class="text-center"><b>Super Attack</b></td></tr>
+						<tr data-ng-repeat="s in cardSelected.specials"><td>{{s.name}}</td></tr>
+						<tr data-ng-repeat="s in cardSelected.specials"><td>{{s.description}}</td></tr>
 						<tr>
 							<td>
 								<b>Links :</b> <span data-ng-repeat="link in cardSelected.linkSkills" title="{{link.description}}">{{link.name}}, </span>

@@ -20,7 +20,6 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 	$scope.commonsLinks = {'01':{'label':'', 'list':[]}, '12':{'label':'', 'list':[]}, '34':{'label':'', 'list':[]}, '45':{'label':'', 'list':[]}}
 	
 	$scope.changeLead = function(position, ownLead) {
-		console.log("changement de lead : " + position + ". ownLead ? " + ownLead)
 		if (ownLead) {
 			$scope.ownLead = position
 		} else {

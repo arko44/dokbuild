@@ -18,11 +18,13 @@ import fr.arko.dokbuild.dao.CardsDao;
 import fr.arko.dokbuild.dao.LeaderSkillsDao;
 import fr.arko.dokbuild.dao.LinkSkillsDao;
 import fr.arko.dokbuild.dao.PassiveSkillsDao;
+import fr.arko.dokbuild.dao.SpecialsDao;
 import fr.arko.dokbuild.domain.CardCategories;
 import fr.arko.dokbuild.domain.Cards;
 import fr.arko.dokbuild.domain.LeaderSkills;
 import fr.arko.dokbuild.domain.LinkSkills;
 import fr.arko.dokbuild.domain.PassiveSkills;
+import fr.arko.dokbuild.domain.Specials;
 import fr.arko.dokbuild.enumeration.Classe;
 import fr.arko.dokbuild.enumeration.Element;
 import fr.arko.dokbuild.enumeration.Rarity;
@@ -44,6 +46,9 @@ public class CardsService {
 
 	@Autowired
 	private LinkSkillsDao linkSkillsDao;
+	
+	@Autowired
+	private SpecialsDao specialsDao;
 	
 	@Autowired
 	private CardCategoriesDao cardCategoriesDao;
@@ -83,6 +88,9 @@ public class CardsService {
 			card.setPassiveSkill(passive);
 		}
 		
+		List<Specials> listSpecials = specialsDao.findByCardId(id);
+		card.setSpecials(listSpecials);
+
 		List<Integer> categoriesId = Arrays.asList(card.getCardCategory1Id(), card.getCardCategory2Id())
 				.stream().filter(x->x!=null).collect(Collectors.toList());
 		List<CardCategories> listCategories = cardCategoriesDao.findByIdIn(categoriesId);

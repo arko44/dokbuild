@@ -81,4 +81,7 @@ public class Cards extends AbstractEntity {
 	@Column(name="card_category6_id")
 	private Integer cardCategory6Id;
 	
+	@Transient
+	private List<Specials> specials;
+	
 }
