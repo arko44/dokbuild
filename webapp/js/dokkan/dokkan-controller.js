@@ -14,8 +14,19 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 	var offset = 20
 	
 	var saibaimanId = 1000780
-	$scope.team = [{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId}]
+	$scope.team = [{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId}]
+	$scope.ownLead = 4
+	$scope.friendLead = 6
 	$scope.commonsLinks = {'01':{'label':'', 'list':[]}, '12':{'label':'', 'list':[]}, '34':{'label':'', 'list':[]}, '45':{'label':'', 'list':[]}}
+	
+	$scope.changeLead = function(position, ownLead) {
+		console.log("changement de lead : " + position + ". ownLead ? " + ownLead)
+		if (ownLead) {
+			$scope.ownLead = position
+		} else {
+			$scope.friendLead = position
+		}
+	}
 	
 	$scope.affectCardToTeam = function(id, position) {
 		httpService.getData("/cards/get/", {'id': id}).then(function(card) {
@@ -191,9 +202,14 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 		loadCategories()
 		loadLinks()
 		
-		for (var i=0; i<7; i++) {
-			$scope.affectCardToTeam(1009830, i)
-		}
+		var i=0
+		$scope.affectCardToTeam(1009430, i++)
+		$scope.affectCardToTeam(1009830, i++)
+		$scope.affectCardToTeam(1011300, i++)
+		$scope.affectCardToTeam(1011060, i++)
+		$scope.affectCardToTeam(1009330, i++)
+		$scope.affectCardToTeam(1011800, i++)
+		$scope.affectCardToTeam(1009330, i++)
 		
 		updateCommonsLinks(1)
 		updateCommonsLinks(4)

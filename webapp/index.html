@@ -53,8 +53,13 @@
 	<div class="container" data-ng-controller="dokkanController" role="main">
 		<div class="row">
 			<div class="col-xs-12 col-md-12">
-				
 				<table>
+					<tr>
+						<td class="text-center" ng-repeat="a in _.range(0, 5) track by $index">
+							<button ng-click="changeLead(a/2, true)" ng-if="a%2==0" type="button" class="btn btn-xs btn-{{ownLead==(a/2) ? 'success':'default'}} ">Lead A</button>
+							<button ng-click="changeLead(a/2, false)" ng-if="a%2==0" type="button" class="btn btn-xs btn-{{friendLead==(a/2) ? 'success':'default'}} ">Lead B</button>
+						</td>
+					</tr>
 					<tr>
 						<td><img dragmod="switch_0" drag="{{team[0].id}}" drop="0" src="images/thumbs/{{team[0].id}}_thumb.png" data-ng-click="displayCard(team[0].id)" /></td>
 						<td>
@@ -65,6 +70,14 @@
 							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['12'].label}}" />
 						</td>
 						<td><img dragmod="switch_2" drag="{{team[2].id}}" drop="2" src="images/thumbs/{{team[2].id}}_thumb.png" data-ng-click="displayCard(team[2].id)" /></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="text-center" ng-repeat="b in _.range(6, 13) track by $index">
+							<button ng-click="changeLead(b/2, true)" ng-if="b%2==0" type="button" class="btn btn-xs btn-{{ownLead==(b/2) ? 'success':'default'}} ">Lead A</button>
+							<button ng-click="changeLead(b/2, false)" ng-if="b%2==0" type="button" class="btn btn-xs btn-{{friendLead==(b/2) ? 'success':'default'}} ">Lead B</button>
+						</td>
 					</tr>
 					<tr>
 						<td><img dragmod="switch_3" drag="{{team[3].id}}" drop="3" src="images/thumbs/{{team[3].id}}_thumb.png" data-ng-click="displayCard(team[3].id)" /></td>
@@ -76,6 +89,8 @@
 							<img class="links" data-toggle="popover" src="images/dokkan/links2.png" data-html="{{commonsLinks['45'].label}}" />
 						</td>
 						<td><img dragmod="switch_5" drag="{{team[5].id}}" drop="5" src="images/thumbs/{{team[5].id}}_thumb.png" data-ng-click="displayCard(team[5].id)" /></td>
+						<td>|</td>
+						<td><img dragmod="switch_6" drag="{{team[6].id}}" drop="6" src="images/thumbs/{{team[6].id}}_thumb.png" data-ng-click="displayCard(team[6].id)" /></td>
 					</tr>
 				</table>
 			</div>
