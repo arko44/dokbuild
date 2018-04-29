@@ -17,7 +17,7 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 	$scope.team = [{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId},{id:saibaimanId}]
 	$scope.ownLead = 4
 	$scope.friendLead = 6
-	$scope.commonsLinks = {'01':{'label':'', 'list':[]}, '12':{'label':'', 'list':[]}, '34':{'label':'', 'list':[]}, '45':{'label':'', 'list':[]}}
+	$scope.commonsLinks = {'01':{'label':'', 'links':[]}, '12':{'label':'', 'links':[]}, '34':{'label':'', 'links':[]}, '45':{'label':'', 'links':[]}}
 	
 	$scope.changeLead = function(position, ownLead) {
 		if (ownLead) {
@@ -53,14 +53,14 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 			//comparaison de $scope.team[position] && $scope.team[position - 1]
 			var other = $scope.team[position - 1]
 			var commonsLinks = getCommonsLinks(card, other)
-			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', links:commonsLinks}
+			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', 'links':commonsLinks}
 			$scope.commonsLinks['' + (position-1) + '' + position] = object
 		}
 		if ([0, 1, 3, 4].includes(position)) {
 			//comparaison de $scope.team[position] && $scope.team[position + 1]
 			var other = $scope.team[position + 1]
 			var commonsLinks = getCommonsLinks(card, other)
-			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', links:commonsLinks}
+			var object = {'label':'<table><tr>' + commonsLinks.map(l => '<td>' + l.name + " (" + l.description + ")</td>").join('</tr><tr>') + '</tr></table>', 'links':commonsLinks}
 			$scope.commonsLinks['' + position + '' + (position+1) ] = object
 		}
 	}
