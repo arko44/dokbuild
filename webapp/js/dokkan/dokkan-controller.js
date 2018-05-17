@@ -87,6 +87,7 @@ app.controller('dokkanController', function( $scope, $rootScope, $interval, http
 		if (cardId != undefined && cardId > 0) {
 			httpService.getData("/cards/get/", {'id': cardId}).then(function(card) {
 				$scope.cardSelected = card
+				console.log(card.leaderSkill)
 			})
 		}
 	}
